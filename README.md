@@ -6,7 +6,7 @@ Installs PostgreSQL and setup db user and databases (if provided).
 Installation
 --------------
 
-`ansible-galaxy install palkan.postgresql`
+`ansible-galaxy install teachbase-ansible.postgresql`
 
 Role Variables
 --------------
@@ -30,5 +30,5 @@ Example Playbook
 ```yml
   - hosts: servers
     roles:
-       - palkan.postgresql
+       - teachbase-ansible.postgresql
 ```
