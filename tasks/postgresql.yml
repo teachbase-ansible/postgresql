@@ -18,3 +18,15 @@
 
 - name: PostgreSQL | Install contrib
   apt: pkg=postgresql-contrib-{{ postgresql_version }} state=latest
+
+- name: Systemd | Reload unit configuration
+  command: systemctl daemon-reload
+
+- name: Systemd | Activate the launch of the service at boot
+  command: systemctl enable postgresql
+
+- name: Systemd | Activate the launch of the service at boot
+  command: systemctl enable postgresql
+
+- name: PostgreSQL | Start PostgreSQL
+  command: sudo systemctl start postgresql
