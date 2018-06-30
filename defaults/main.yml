@@ -1,8 +1,12 @@
-postgresql_version: 9.5
+postgresql_version: 10
 postgresql_hba: pg_hba.conf.j2
 postgresql_config: postgresql.conf.j2
 postgresql_ram_shared: 512
 postgresql_ram_cache: 256
-# postgresql_db_user: pg_admin
-# postgresql_db_user_pass: supersecret123
-# postgresql_db_user_flags: "CREATEDB,NOSUPERUSER"
+
+os_name: "{{ ansible_distribution }}" # e.g. "Ubuntu"
+os_version: "{{ ansible_distribution_version }}" # e.g. "14.04"
+
+postgresql_db_user: pg_admin
+postgresql_db_user_pass: supersecret123
+postgresql_db_user_flags: "CREATEDB,NOSUPERUSER"

@@ -4,4 +4,4 @@
 - name: PostgreSQL | Copy valid postgresql.conf
   template: src={{ postgresql_config }} dest=/etc/postgresql/{{ postgresql_version }}/main/postgresql.conf
   notify:
-    - Restart PostgreSQL
+    - Restart Postgresql Service

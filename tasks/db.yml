@@ -1,5 +1,6 @@
 - name: PostgreSQL | Setup database
-  sudo_user: postgres
+  become: true
+  become_user: postgres
   postgresql_db:
     db: "{{ item }}"
     encoding: 'UTF-8'

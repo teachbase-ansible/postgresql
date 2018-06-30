@@ -1,7 +1,7 @@
 - name: PostgreSQL | Create User
-  postgresql_user: name={{ postgresql_db_user }} password={{ postgresql_db_user_pass }} encrypted=no role_attr_flags={{ postgresql_db_user_flags }}
-  sudo: yes
-  sudo_user: postgres
+  postgresql_user: name={{ postgresql_db_user }} password={{ postgresql_db_user_pass }} encrypted=yes role_attr_flags={{ postgresql_db_user_flags }}
+  become: yes
+  become_user: postgres
   when: postgresql_db_user is defined
   notify:
-    - Restart PostgreSQL
+    - Restart Postgresql Service

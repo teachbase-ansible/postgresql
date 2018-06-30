@@ -1,2 +1,7 @@
-- name: Restart PostgreSQL
-  command: sudo systemctl restart postgresql
+- name: Restart Postgresql Service
+  systemd: name=postgresql state=restarted daemon_reload=yes
+  when: os_version|int >= 16.04
+
+- name: Restart Postgresql Service
+  service: name=postgresql state=restarted
+  when: os_version|int <= 14.04

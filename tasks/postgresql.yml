@@ -1,3 +1,29 @@
+- name: Install wget
+  apt: pkg="wget" state=latest
+
+- name: PostgreSQL | Add repo key
+  shell: "wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -"
+  warn: false
+
+- name: PostgreSQL | Add repo
+  shell: "echo 'deb http://apt.postgresql.org/pub/repos/apt/ trusty-pgdg main' >> /etc/apt/sources.list.d/pgdg.list"
+  when: os_version|int == 14.04
+
+- name: PostgreSQL | Add repo
+  shell: "echo 'deb http://apt.postgresql.org/pub/repos/apt/ xenial-pgdg main' >> /etc/apt/sources.list.d/pgdg.list"
+  when: os_version|int == 16.04
+  warn: false
+
+- name: Update
+  become: yes
+  shell: "apt-get update"
+
+- name: PostgreSQL | Install
+  apt: pkg="postgresql-{{ postgresql_version }}" state=latest update_cache=true
+
+- name: PostgreSQL | Install contrib
+  apt: pkg=postgresql-contrib-{{ postgresql_version }} state=latest
+  
 - name: PostgreSQL | Ensure packages are installed
   action: apt name={{ item }}
   with_items:
@@ -7,26 +33,10 @@
 - name: PostgreSQL | Install python-pycurl
   apt: pkg=python-pycurl state=latest
 
-- name: PostgreSQL | Add repo key
-  apt_key: url=http://apt.postgresql.org/pub/repos/apt/ACCC4CF8.asc
-
-- name: PostgreSQL | Add repo
-  apt_repository: repo='deb http://apt.postgresql.org/pub/repos/apt/ precise-pgdg main'
-
-- name: PostgreSQL | Install
-  apt: pkg="postgresql-{{ postgresql_version }}" state=latest update_cache=true
-
-- name: PostgreSQL | Install contrib
-  apt: pkg=postgresql-contrib-{{ postgresql_version }} state=latest
-
-- name: Systemd | Reload unit configuration
-  command: systemctl daemon-reload
-
-- name: Systemd | Activate the launch of the service at boot
-  command: systemctl enable postgresql
-
-- name: Systemd | Activate the launch of the service at boot
-  command: systemctl enable postgresql
-
-- name: PostgreSQL | Start PostgreSQL
-  command: sudo systemctl start postgresql
+- name: enable service postgresql and ensure it is not masked
+  systemd:
+    name: postgresql
+    enabled: yes
+    masked: no
+  notify:
+    - Restart Postgresql Service
