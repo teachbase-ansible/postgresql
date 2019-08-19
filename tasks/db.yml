@@ -9,5 +9,5 @@
     template: 'template0'
     state: present
     owner: "{{ postgresql_db_user }}"
-  with_items: postgresql_databases
+  with_items: "{{ postgresql_databases }}"
   when: postgresql_databases is defined

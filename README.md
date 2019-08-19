@@ -15,7 +15,7 @@ Role Variables
 
 | Name                        | Default Value |  Description    |
 |-----------------------------|-----|---------------------------|
-| postgresql_version          | 9.5 | |
+| postgresql_version          | 10 | |
 | postgresql_hba              | pg_hba.conf.j2 | |
 | postgresql_config           | postgresql.conf.j2 | |
 | postgresql_ram_shared       | 512 | To use with default config |
